@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  streamlit:
+    build: .
+    ports:
+      - "8501:8501"
+    container_name: streamlit_app
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - streamlit
+    restart: always
